@@ -1,0 +1,7 @@
+﻿  main.cpp
+C:\Users\Yunix\source\repos\Project2\Project2\moves.cpp(85,28): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Yunix\source\repos\Project2\Project2\moves.cpp(555,6): error C3861: 'isItAValidMove': identifier not found
+  moves.cpp
+C:\Users\Yunix\source\repos\Project2\Project2\moves.cpp(85,28): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Yunix\source\repos\Project2\Project2\moves.cpp(555,6): error C3861: 'isItAValidMove': identifier not found
+  Generating Code...
