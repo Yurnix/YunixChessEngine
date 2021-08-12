@@ -12,18 +12,73 @@ enum Piece {
 	bPawn, bRook, bKnight, bBishop, bQueen, bKing
 };
 
+inline string pieceName(int p) {
+	switch (p) {
+	case blank: return "  ";
+	case wPawn: return "wp";
+	case wRook: return "wR";
+	case wKnight: return "wk";
+	case wBishop: return "wb";
+	case wQueen: return "wQ";
+	case wKing: return "wK";
+	case bPawn: return "bp";
+	case bRook: return "bR";
+	case bKnight: return "bk";
+	case bBishop: return "bb";
+	case bQueen: return "bQ";
+	case bKing: return "bK";
+	}
+	return "NN";
+}
+inline bool parseMove(string move, int& fromx, int& fromy, int& tox, int& toy) {
+	int cords[4], s = 0, countO = 0;
+	for (int i = 0; i < move.size(); i++) {
+		if (s == 4)
+			break;
+		if (move[i] >= 'a' && move[i] <= 'h') {
+			cords[s] = int(move[i] - 'a');
+			s++;
+		}
+		else if (move[i] >= 'A' && move[i] <= 'H') {
+			cords[s] = int(move[i] - 'a');
+			s++;
+		}
+		else if (move[i] >= '1' && move[i] <= '8') {
+			cords[s] = int(move[i] - '1');
+			s++;
+		}
+		else if (move[i] == 'o' || move[i] == 'O') {
+			countO++;
+		}
+	}
+	if (s == 0) {
+		if (countO == 2) {
+			fromx = 100;
+			cout << "Short casteling" << endl;
+			return true;
+		}
+		if (countO == 3) {
+			fromx = 200;
+			cout << "Long casteling" << endl;
+			return true;
+		}
+		return false;
+	}
+	if (s == 4) {
+		fromy = cords[0];
+		fromx = cords[1];
+		toy = cords[2];
+		tox = cords[3];
+		cout << endl << move << endl << "Move : " << fromy << " " << fromx << " " << toy << " " << tox << endl;
+		return true;
+	}
+	cout << move << " not recognized" << endl;
+	return false;
+}
+
 static float vals[] = { 0, 1, 5, 3, 3, 8, 100, -1, -5, -3, -3, -8, -100 };
 enum boardName { a, b, c, d, e, f, g, h };
 
-inline bool white(short x) {
-	if (x == wPawn ||
-		x == wRook ||
-		x == wKnight ||
-		x == wQueen ||
-		x == wKing)
-		return true;
-	return false;
-}
 
 static struct KnightMoves {
 	int verticalOffset[8] = { 1, 2, 2, 1, -1, -2, -2, -1 };
@@ -101,6 +156,8 @@ inline float returnWhiteMove() {
 
 inline void initBoard(short board[][N], gameParams& gp) {
 	gp.canWhiteCastleShort = gp.canWhiteCastleLong = gp.canBlackCastleShort = gp.canBlackCastleLong = true;
+	gp.mateOnBoard = false;
+	gp.tillDraw = 0;
 	for (int i = 0; i < N; i++)
 		for (int j = 0; j < N; j++)
 			currentBoard[i][j] = 0;
@@ -550,74 +607,9 @@ inline void kingGrid(bool grid[][N], short board[][N], gameParams gp, bool turn)
 	}
 	return;
 }
-inline bool makeAMove(int fromx, int fromy, int tox, int toy, short board[][N], gameParams& gp, bool turn) {
-	bool elPassant = false;
-	if (isItAValidMove(fromx, fromy, tox, toy, board, gp, turn, elPassant)) {
-		gp.lastMovedTwoX = -1;
-		gp.lastMovedTwoY = -1;
-		if (turn && fromx == 100) { //white o - o
-			gp.canWhiteCastleLong = false;
-			gp.canWhiteCastleShort = false;
-			board[0][e] = board[0][g] = blank;
-			board[0][f] = wRook;
-			board[0][g] = wKing;
-			return true;
-		}
-		if (turn && fromx == 200) { //white o - o - o
-			gp.canWhiteCastleLong = false;
-			gp.canWhiteCastleShort = false;
-			board[0][a] = board[0][e] = blank;
-			board[0][d] = wRook;
-			board[0][c] = wKing;
-			return true;
-		}
-		if (!turn && fromx == 100) { //black o - o
-			gp.canBlackCastleLong = false;
-			gp.canBlackCastleShort = false;
-			board[7][e] = board[7][g] = blank;
-			board[7][f] = bRook;
-			board[7][g] = bKing;
-			return true;
-		}
-		if (!turn && fromx == 200) { //black o - o - o
-			gp.canBlackCastleLong = false;
-			gp.canBlackCastleShort = false;
-			board[7][a] = board[7][e] = blank;
-			board[7][d] = bRook;
-			board[7][c] = bKing;
-			return true;
-		}
-		if (board[fromx][fromy] == wPawn) {
-			if (tox - fromx == 2) {
-				gp.lastMovedTwoX = tox;
-				gp.lastMovedTwoX = toy;
-			}
-			if (elPassant) {
-				board[tox][toy - 1] = blank;
-			}
-		}
-		if (board[fromx][fromy] == bPawn) {
-			if (tox - fromx == 2) {
-				gp.lastMovedTwoX = tox;
-				gp.lastMovedTwoX = toy;
-			}
-			if (elPassant) {
-				board[tox][toy + 1] = blank;
-			}
-		}
 
-		if (turn && fromx == 0 && (fromy == a || fromy == e)) gp.canWhiteCastleLong = false;
-		if (turn && fromx == 0 && (fromy == h || fromy == e)) gp.canWhiteCastleLong = false;
-		if (!turn && fromx == 7 && (fromy == a || fromy == e)) gp.canBlackCastleLong = false;
-		if (!turn && fromx == 7 && (fromy == h || fromy == e)) gp.canBlackCastleLong = false;
-		board[tox][toy] = board[fromx][fromy];
-		board[fromx][fromy] = blank;
-		return true;
-	}
-	return false;
-}
-
-inline bool isItAValidMove(int fromx, int fromy, int tox, int toy, short board[][N], gameParams& gp, bool turn, bool &elPassant) {
+inline bool isItAValidMove(int fromx, int fromy, int tox, int toy, short board[][N], gameParams& gp, bool turn, bool& elPassant, bool& twoMove) {
+	//while()cout << "Is it valid move called with " << fromx << " " << fromy << " - " << tox << " " << toy << endl;
 	if (fromx == 100) {
 		if (turn && gp.canWhiteCastleShort) {
 			bool grid[N][N] = {};
@@ -650,11 +642,11 @@ inline bool isItAValidMove(int fromx, int fromy, int tox, int toy, short board[]
 	int x, y;
 	if (turn) {
 		switch (board[fromx][fromy]) {
-		case wKing: //TODO castelings
+		case wKing:
 			for (int ii = 0; ii < 8; ii++) {
 				x = fromx + kingmoves.horizontalOffset[ii];
 				y = fromy + kingmoves.verticalOffset[ii];
-				if (inBoard(x,y))
+				if (inBoard(x, y))
 					if (x == tox && y == toy) {
 						bool grid[N][N] = {};
 						kingGrid(grid, board, gp, turn);
@@ -861,35 +853,39 @@ inline bool isItAValidMove(int fromx, int fromy, int tox, int toy, short board[]
 			return false;
 			break;
 		case wPawn:
-			y = fromy + whitepawnmoves.oneStep;
-			x = fromx;
+			
+			x = fromx + whitepawnmoves.oneStep;
+			y = fromy;
 			if (inBoard(x, y))
 				if (board[x][y] == blank && x == tox && y == toy)
 					return true;
-
-			x = fromx + whitepawnmoves.eatsLeftx;
+			
+			y = fromy + whitepawnmoves.eatsLeftx;
 			if (inBoard(x, y))
 				if (board[x][y] >= bPawn && board[x][y] <= bKing && x == tox && y == toy)
 					return true;
-				else if (board[x][fromy] == bPawn && gp.lastMovedTwoX == x && gp.lastMovedTwoY == fromy) //el passant
+				else if (board[fromx][y] == bPawn && gp.lastMovedTwoX == fromx && gp.lastMovedTwoY == y) //el passant
 				{
 					elPassant = true; return true;
 				}
-
-			x = fromx + whitepawnmoves.eatsRightx;
+			
+			y = fromy + whitepawnmoves.eatsRightx;
 			if (inBoard(x, y))
 				if (board[x][y] >= bPawn && board[x][y] <= bKing && x == tox && y == toy)
 					return true;
-				else if (board[x][fromy] == bPawn && gp.lastMovedTwoX == x && gp.lastMovedTwoY == fromy) //el passant
+				else if (board[fromx][y] == bPawn && gp.lastMovedTwoX == fromx && gp.lastMovedTwoY == y) //el passant
 				{
 					elPassant = true; return true;
 				}
-
-			x = fromx;
-			y = fromy + whitepawnmoves.twoStep;
+			
+			y = fromy;
+			x = fromx + whitepawnmoves.twoStep;
 			if (inBoard(x, y))
-				if (board[x][y] == blank && x == tox && y == toy && fromx == 1)
+				if (board[x][y] == blank && board[x-1][y] == blank && x == tox && y == toy && fromx == 1) {
+					twoMove = true;
 					return true;
+				}
+			
 
 			return false;
 			break;
@@ -1110,35 +1106,37 @@ inline bool isItAValidMove(int fromx, int fromy, int tox, int toy, short board[]
 			return false;
 			break;
 		case bPawn:
-			y = fromy + blackpawnmoves.oneStep;
-			x = fromx;
+			x = fromx + blackpawnmoves.oneStep;
+			y = fromy;
 			if (inBoard(x, y))
 				if (board[x][y] == blank && x == tox && y == toy)
 					return true;
 
-			x = fromx + blackpawnmoves.eatsLeftx;
+			y = fromy + blackpawnmoves.eatsLeftx;
 			if (inBoard(x, y))
 				if (board[x][y] >= wPawn && board[x][y] <= wKing && x == tox && y == toy)
 					return true;
-				else if (board[x][fromy] == wPawn && gp.lastMovedTwoX == x && gp.lastMovedTwoY == fromy) //el passant
+				else if (board[fromx][y] == wPawn && gp.lastMovedTwoX == fromx && gp.lastMovedTwoY == y) //el passant
 				{
 					elPassant = true; return true;
 				}
 
-			x = fromx + blackpawnmoves.eatsRightx;
+			y = fromy + blackpawnmoves.eatsRightx;
 			if (inBoard(x, y))
 				if (board[x][y] >= wPawn && board[x][y] <= wKing && x == tox && y == toy)
 					return true;
-				else if (board[x][fromy] == wPawn && gp.lastMovedTwoX == x && gp.lastMovedTwoY == fromy) //el passant
+				else if (board[fromx][y] == wPawn && gp.lastMovedTwoX == fromx && gp.lastMovedTwoY == y) //el passant
 				{
 					elPassant = true; return true;
 				}
 
-			x = fromx;
-			y = fromy + blackpawnmoves.twoStep;
+			y = fromy;
+			x = fromx + blackpawnmoves.twoStep;
 			if (inBoard(x, y))
-				if (board[x][y] == blank && x == tox && y == toy && fromx == 6)
+				if (board[x][y] == blank && board[x - 1][y] == blank && x == tox && y == toy && fromx == 6) {
+					twoMove = true;
 					return true;
+				}
 
 			return false;
 			break;
@@ -1147,3 +1145,76 @@ inline bool isItAValidMove(int fromx, int fromy, int tox, int toy, short board[]
 	}
 	return false;
 }
+
+inline bool makeAMove(int fromx, int fromy, int tox, int toy, short board[][N], gameParams& gp, bool turn) {
+	cout << "makeAMove move called with " << fromx << " " << fromy << " - " << tox << " " << toy << endl;
+	bool elPassant = false;
+	bool twoMoves = false;
+	//cout << "returns: " << isItAValidMove(fromx, fromy, tox, toy, board, gp, turn, elPassant, twoMoves) << endl;
+	if (isItAValidMove(fromx, fromy, tox, toy, board, gp, turn, elPassant, twoMoves)) {
+		gp.lastMovedTwoX = -1;
+		gp.lastMovedTwoY = -1;
+		if (turn && fromx == 100) { //white o - o
+			gp.canWhiteCastleLong = false;
+			gp.canWhiteCastleShort = false;
+			board[0][e] = board[0][h] = blank;
+			board[0][f] = wRook;
+			board[0][g] = wKing;
+			return true;
+		}
+		if (turn && fromx == 200) { //white o - o - o
+			gp.canWhiteCastleLong = false;
+			gp.canWhiteCastleShort = false;
+			board[0][a] = board[0][e] = blank;
+			board[0][d] = wRook;
+			board[0][c] = wKing;
+			return true;
+		}
+		if (!turn && fromx == 100) { //black o - o
+			gp.canBlackCastleLong = false;
+			gp.canBlackCastleShort = false;
+			board[7][e] = board[7][h] = blank;
+			board[7][f] = bRook;
+			board[7][g] = bKing;
+			return true;
+		}
+		if (!turn && fromx == 200) { //black o - o - o
+			gp.canBlackCastleLong = false;
+			gp.canBlackCastleShort = false;
+			board[7][a] = board[7][e] = blank;
+			board[7][d] = bRook;
+			board[7][c] = bKing;
+			return true;
+		}
+		if (board[fromx][fromy] == wPawn) {
+			if (twoMoves) {
+				gp.lastMovedTwoX = tox;
+				gp.lastMovedTwoY = toy;
+				//cout << tox << " to tttt " << toy << endl;
+				//cin.get();
+			}
+			if (elPassant) {
+				board[tox - 1][toy] = blank;
+			}
+		}
+		if (board[fromx][fromy] == bPawn) {
+			if (twoMoves) {
+				gp.lastMovedTwoX = tox;
+				gp.lastMovedTwoY = toy;
+			}
+			if (elPassant) {
+				board[tox + 1][toy] = blank;
+			}
+		}
+
+		if (turn && fromx == 0 && (fromy == a || fromy == e)) gp.canWhiteCastleLong = false;
+		if (turn && fromx == 0 && (fromy == h || fromy == e)) gp.canWhiteCastleShort = false;
+		if (!turn && fromx == 7 && (fromy == a || fromy == e)) gp.canBlackCastleLong = false;
+		if (!turn && fromx == 7 && (fromy == h || fromy == e)) gp.canBlackCastleShort = false;
+		board[tox][toy] = board[fromx][fromy];
+		board[fromx][fromy] = blank;
+		return true;
+	}
+	return false;
+}
+
