@@ -1,0 +1,6 @@
+﻿  main.cpp
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\moves.h(12,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\moves.h(13,32): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\moves.h(14,69): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\moves.h(158,28): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  Project2.vcxproj -> C:\Users\Yunix\Source\Repos\YunixChessEngine\x64\Debug\YunixChessEngine.exe
