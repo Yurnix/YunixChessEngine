@@ -1,0 +1,47 @@
+﻿  BoardEvaluation.cpp
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(18,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(19,32): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(20,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(21,69): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\BoardEvaluation.cpp(6,28): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  EngineFeatures.cpp
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(18,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(19,32): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(20,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(21,69): warning C4305: 'initializing': truncation from 'double' to 'float'
+  KingGrid.cpp
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(18,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(19,32): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(20,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(21,69): warning C4305: 'initializing': truncation from 'double' to 'float'
+  MakeMove.cpp
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(18,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(19,32): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(20,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(21,69): warning C4305: 'initializing': truncation from 'double' to 'float'
+  MoveValidity.cpp
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(18,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(19,32): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(20,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(21,69): warning C4305: 'initializing': truncation from 'double' to 'float'
+  MovesParser.cpp
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(18,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(19,32): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(20,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(21,69): warning C4305: 'initializing': truncation from 'double' to 'float'
+  ShowBoard.cpp
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(18,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(19,32): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(20,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(21,69): warning C4305: 'initializing': truncation from 'double' to 'float'
+  main.cpp
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(18,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(19,32): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(20,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\YunixChessLib.h(21,69): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\main.cpp(19,13): warning C4101: 'fromy': unreferenced local variable
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\main.cpp(19,25): warning C4101: 'toy': unreferenced local variable
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\main.cpp(19,20): warning C4101: 'tox': unreferenced local variable
+C:\Users\Yunix\source\repos\YunixChessEngine\Project2\main.cpp(19,6): warning C4101: 'fromx': unreferenced local variable
+  Generating Code...
+  Project2.vcxproj -> C:\Users\Yunix\Source\Repos\YunixChessEngine\x64\Debug\YunixChessEngine.exe
